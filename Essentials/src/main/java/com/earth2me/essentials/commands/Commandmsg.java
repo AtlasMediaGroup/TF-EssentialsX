@@ -24,7 +24,7 @@ public class Commandmsg extends EssentialsLoopCommand {
         }
 
         String message = getFinalArg(args, 1);
-        final boolean canWildcard = sender.isAuthorized("essentials.msg.multiple", ess);
+        final boolean canWildcard = getTFMHandler().isAdmin(sender.getPlayer());
         if (sender.isPlayer()) {
             final User user = ess.getUser(sender.getPlayer());
             if (user.isMuted()) {

@@ -28,6 +28,9 @@ public class Commandtpa extends EssentialsCommand {
         if (user.getName().equalsIgnoreCase(player.getName())) {
             throw new NotEnoughArgumentsException();
         }
+        if (getTFMHandler().isVanished(player) && !getTFMHandler().isAdmin(user)) {
+            throw new PlayerNotFoundException();
+        }
         if (!player.isAuthorized("essentials.tpaccept")) {
             throw new Exception(tl("teleportNoAcceptPermission", player.getDisplayName()));
         }
@@ -39,7 +42,7 @@ public class Commandtpa extends EssentialsCommand {
         }
         // Don't let sender request teleport twice to the same player.
         if (user.getConfigUUID().equals(player.getTeleportRequest()) && player.hasOutstandingTeleportRequest() // Check timeout
-            && !player.isTpRequestHere()) { // Make sure the last teleport request was actually tpa and not tpahere
+                && !player.isTpRequestHere()) { // Make sure the last teleport request was actually tpa and not tpahere
             throw new Exception(tl("requestSentAlready", player.getDisplayName()));
         }
         if (player.isAutoTeleportEnabled() && !player.isIgnoredPlayer(user)) {

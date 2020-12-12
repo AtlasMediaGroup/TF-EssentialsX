@@ -41,6 +41,7 @@ ext {
     spigotVersion = '1.16.4-R0.1-SNAPSHOT'
     junit5Version = '5.7.0'
     mockitoVersion = '3.2.0'
+    tfmVersion = '0be2aa7'
 }
 
 subprojects {
@@ -51,6 +52,7 @@ subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
 
     repositories {
+        maven { url = 'https://jitpack.io' }
         maven { url = 'https://hub.spigotmc.org/nexus/content/groups/public/' }
         maven { url = 'https://papermc.io/repo/repository/maven-public/' }
         maven {
@@ -65,6 +67,7 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter:${junit5Version}"
         testImplementation "org.junit.vintage:junit-vintage-engine:${junit5Version}"
         testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+        implementation "com.github.AtlasMediaGroup:TotalFreedomMod:${tfmVersion}"
 
         if (project.name != "1_8Provider" && project.name != "PaperProvider" && project.name != "NMSReflectionProvider") { // These providers use their own bukkit versions
             api "org.spigotmc:spigot-api:${spigotVersion}"
@@ -139,9 +142,7 @@ subprojects {
 }
 
 def outputTasks() {
-    [":EssentialsX:shadowJar", ":EssentialsXAntiBuild:jar", ":EssentialsXChat:jar",
-     ":EssentialsXGeoIP:shadowJar", ":EssentialsXProtect:jar", ":EssentialsXSpawn:jar",
-     ":EssentialsXXMPP:shadowJar"].stream().map({ tasks.findByPath(it) })
+    [":EssentialsX:shadowJar", ":EssentialsXSpawn:jar"].stream().map({ tasks.findByPath(it) })
 }
 
 task copyToJars(type: Copy) {

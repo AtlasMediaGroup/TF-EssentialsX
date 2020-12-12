@@ -23,6 +23,10 @@ public class Commandinvsee extends EssentialsCommand {
         final User invUser = getPlayer(server, user, args, 0);
         final Inventory inv;
 
+        if (getTFMHandler().isAdmin(invUser) && !getTFMHandler().isAdmin(user)) {
+            throw new Exception("You cannot see inside admins' inventories!");
+        }
+
         if (args.length > 1 && user.isAuthorized("essentials.invsee.equip")) {
             inv = server.createInventory(invUser.getBase(), 9, "Equipped");
             inv.setContents(invUser.getBase().getInventory().getArmorContents());

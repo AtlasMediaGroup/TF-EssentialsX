@@ -2,6 +2,7 @@ package com.earth2me.essentials.commands;
 
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.IEssentialsModule;
+import com.earth2me.essentials.TFMHandler;
 import com.earth2me.essentials.Trade;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.FormatUtil;
@@ -44,8 +45,14 @@ public abstract class EssentialsCommand implements IEssentialsCommand {
     protected transient IEssentials ess;
     protected transient IEssentialsModule module;
 
+    protected static final TFMHandler tfmHandler = new TFMHandler();
+
     protected EssentialsCommand(final String name) {
         this.name = name;
+    }
+
+    public static TFMHandler getTFMHandler() {
+        return tfmHandler;
     }
 
     public static String getFinalArg(final String[] args, final int start) {
